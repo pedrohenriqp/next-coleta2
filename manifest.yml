@@ -1,0 +1,10 @@
+applications:
+- path: .
+  memory: 256M
+  instances: 1
+  domain: mybluemix.net
+  name: Next - Coletor 2
+  host: next-coletor2
+  disk_quota: 1024M
+  services:
+  - availability-monitoring-auto
