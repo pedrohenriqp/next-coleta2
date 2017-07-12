@@ -43,6 +43,10 @@ a:hover {
 	left: 22%; /* posiciona a 90px para a esquerda */ 
 	top: 30%; /* posiciona a 70px para baixo */ 
 }
+.helloInput {
+  width: 200px;
+}
+
 
 h1 {
 	font-weight: bold;
