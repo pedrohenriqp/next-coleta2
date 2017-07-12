@@ -22,7 +22,7 @@
           <br>
           <p class="pergunta1"> Perguntas relacionadas ao <span class = "green">Flow</span>
             <br>
-          <input type="text" name="Nome" size="50" /> </p>
+          <input id="user_name" type="text" class="form-control" placeholder="Flow" aria-describedby="sizing-addon1" value="" size="50" /> </p>
           <br>
           <p class="pergunta2"> Perguntas  <span class = "green">diversas</span>
         <br>
@@ -31,6 +31,46 @@
       </tr>
       
     </table>
+
+
+    <script>
+    	//Submit data when enter key is pressed
+        $('#user_name').keydown(function(e) {
+        	var name = $('#user_name').val();
+            if (e.which == 13 && name.length > 0) { //catch Enter key
+            	//POST request to API to create a new visitor entry in the database
+                $.ajax({
+				  method: "POST",
+				  url: "./api/visitors",
+				  contentType: "application/json",
+				  data: JSON.stringify({name: name })
+				})
+                .done(function(data) {
+                    $('#response').html(AntiXSS.sanitizeInput(data));
+                    $('#nameInput').hide();
+                    getNames();
+                });
+            }
+        });
+
+        //Retreive all the visitors from the database
+        function getNames(){
+          $.get("./api/visitors")
+              .done(function(data) {
+                  if(data.length > 0) {
+                    data.forEach(function(element, index) {
+                      data[index] = AntiXSS.sanitizeInput(element)
+                    });
+                    $('#databaseNames').html("Database contents: " + JSON.stringify(data));
+                  }
+              });
+          }
+
+          //Call getNames on page load.
+          getNames();
+
+
+    </script>
   </body>
 
 </html>
