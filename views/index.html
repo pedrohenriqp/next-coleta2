@@ -31,17 +31,16 @@
         <p id="databaseNames" class="lead text-center"></p>
     </div>
      
-
+<!-- mudado-->
           <br>
-<!--
-          <div class="container">
+           <div class="container">
           <div id="nameInput" class="input-group-lg center-block helloInput">
             <p class="pergunta2">Perguntas <span class = "green">diversas</span>
-            <input id="user_name" type="text" class="form-control" placeholder="Diversas" aria-describedby="sizing-addon1" value="" size="50" />
+            <input id="others" type="text" class="form-control" placeholder="Diversas" aria-describedby="sizing-addon1" value="" size="50" />
         </div></p>
         <p id="databaseNames" class="lead text-center"></p>
-    </div> -->
-
+    </div>
+<!-- mudado-->
 
         </td>
       </tr>
@@ -57,17 +56,18 @@
     <script>
     	//Submit data when enter key is pressed
         $('#user_name').keydown(function(e) {
-        	var name = $('#user_name').val();
+          var name = $('#user_name').val();
             if (e.which == 13 && name.length > 0) { //catch Enter key
               //POST request to API to create a new visitor entry in the database
               location.reload();
-              alert("Resposta enviada com sucesso!")
+              alert("Pergunta sobre o FLOW enviada com sucesso!")
                 $.ajax({
 				  method: "POST",
 				  url: "./api/visitors",
 				  contentType: "application/json",
 				  data: JSON.stringify({name: name })
-				})
+        })
+        
                 .done(function(data) {
                     $('#response').html(AntiXSS.sanitizeInput(data));
                     //$('#nameInput').hide();
@@ -75,6 +75,34 @@
                 });
             }
         });
+
+
+
+        // CHANGED HERE
+    	//Submit data when enter key is pressed
+        $('#others').keydown(function(e) {
+          var outra = $('#others').val();
+            if (e.which == 13 && outra.length > 0) { //catch Enter key
+              //POST request to API to create a new visitor entry in the database
+              location.reload();
+              alert("Pergunta de outras categorias enviada com sucesso!")
+                $.ajax({
+				  method: "POST",
+				  url: "./api/visitors",
+				  contentType: "application/json",
+				  data: JSON.stringify({outra: outra })
+        })
+        
+                .done(function(data) {
+                    $('#response').html(AntiXSS.sanitizeInput(data));
+                    //$('#nameInput').hide();
+                    getNames();
+                });
+            }
+        });
+
+        // MUDADO AQUI
+          /*
         //Retreive all the visitors from the database
         function getNames(){
           $.get("./api/visitors")
@@ -87,7 +115,7 @@
                   }
               });
           }
-          //Call getNames on page load.
+          //Call getNames on page load.   */
           getNames();
           
 

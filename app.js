@@ -1,7 +1,7 @@
 var express = require("express");
 var app = express();
 var cfenv = require("cfenv");
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -19,18 +19,24 @@ var mydb;
 */
 app.post("/api/visitors", function (request, response) {
   var userName = request.body.name;
+  var outras = request.body.outra;
   if(!mydb) {
     console.log("No database.");
-    response.send("Hello " + userName + "!");
     return;
-  }
+  } 
+
   // insert the username as a document
-  mydb.insert({ "name" : userName }, function(err, body, header) {
+  mydb.insert({ "name" : userName , "outras" : outras }, function(err, body, header) {
     if (err) {
       return console.log('[mydb.insert] ', err.message);
     }
     response.send("Hello " + userName + "! I added you to the database.");
   });
+
+
+
+
+
 });
 
 /**
